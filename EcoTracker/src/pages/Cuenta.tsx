@@ -163,7 +163,6 @@ function Cuenta() {
             </IonButton>
           </div>
 
-          {/* Selector de idioma */}
           <div className="language-selector-container">
             <p className="language-label">{t('language') || 'Idioma'}</p>
             <div className="language-buttons-container">

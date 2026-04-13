@@ -169,5 +169,11 @@
     "how_many_metric": "How many metric tons of CO₂-equivalent emissions did U.S. recycling and composting avoid in 2018?",
     "193_million": "193 million",
     "250_million": "250 million",
-    "100_million": "100 million"
+    "100_million": "100 million",
+    "name_site": "Name Site",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "business_hours": "Business Hours",
+    "days_open": "Days Open",
+    "contact_information": "Contact Information"
 }

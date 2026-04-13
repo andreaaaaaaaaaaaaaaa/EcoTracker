@@ -169,5 +169,11 @@
     "how_many_metric": "¿Cuántas toneladas métricas de emisiones equivalentes de CO₂ evitó el reciclaje y compostaje en EE.UU. en 2018?",
     "193_million": "193 millones",
     "250_million": "250 millones",
-    "100_million": "100 millones"
+    "100_million": "100 millones",
+    "name_site": "Nombre del Sitio",
+    "latitude": "Latitud",
+    "longitude": "Longitud",
+    "business_hours": "Horario de Atención",
+    "days_open": "ías de Apertura",
+    "contact_information": "Información de Contacto"
 }

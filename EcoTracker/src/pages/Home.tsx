@@ -402,22 +402,19 @@ const Home: React.FC = () => {
               </button>
             </div>
             <div className='div-form-input'>
-              <p className='form-name'>Name Site:</p><input type='text' placeholder='Name site...' className='form-input' onChange={(e: any) => setNewName(e.target.value)}></input>
+              <p className='form-name'>{t('name_site')}:</p><input type='text' placeholder={t('name_site')} className='form-input' onChange={(e: any) => setNewName(e.target.value)}></input>
             </div>
             <div className='div-form-input'>
-              <p className='form-name'>Address:</p><input type='text' placeholder='Address...' className='form-input' onChange={(e: any) => setNewAddress(e.target.value)}></input>
+              <p className='form-name'>{t('latitude')}:</p><input type='text' placeholder={t('latitude')} className='form-input' onChange={(e: any) => setNewLat(e.target.value)}></input>
             </div>
             <div className='div-form-input'>
-              <p className='form-name'>Latitude:</p><input type='text' placeholder='Latitude...' className='form-input' onChange={(e: any) => setNewLat(e.target.value)}></input>
+              <p className='form-name'>{t('longitude')}:</p><input type='text' placeholder={t('longitude')} className='form-input' onChange={(e: any) => setNewLon(e.target.value)}></input>
             </div>
             <div className='div-form-input'>
-              <p className='form-name'>Longitude:</p><input type='text' placeholder='Longitude...' className='form-input' onChange={(e: any) => setNewLon(e.target.value)}></input>
+              <p className='form-name'>{t('business_hours')}:</p><input type='text' placeholder={t('business_hours')} className='form-input' onChange={(e: any) => setNewBussinessHours(e.target.value)}></input>
             </div>
             <div className='div-form-input'>
-              <p className='form-name'>Bussiness Hours:</p><input type='text' placeholder='Bussiness Hours...' className='form-input' onChange={(e: any) => setNewBussinessHours(e.target.value)}></input>
-            </div>
-            <div className='div-form-input'>
-              <p className='form-days'>Days open:</p>
+              <p className='form-days'>{t('days_open')}:</p>
               <div className='check-days'>
                 <input
                   type="checkbox"
@@ -491,22 +488,22 @@ const Home: React.FC = () => {
               </div>
             </div>
             <div className='div-form-input'>
-              <p className='form-name'>Materials:</p><input type='text' placeholder='Materials...' className='form-input' onChange={(e: any) => setNewMaterials(e.target.value)} ></input>
+              <p className='form-name'>{t('materials')}:</p><input type='text' placeholder={t('materials')} className='form-input' onChange={(e: any) => setNewMaterials(e.target.value)} ></input>
             </div>
             <div className='div-form-input'>
-              <p className='form-name'>Instructions:</p><input type='text' placeholder='Instructions...' className='form-input' onChange={(e: any) => setNewInstructions(e.target.value)}></input>
+              <p className='form-name'>{t('instructions')}:</p><input type='text' placeholder={t('instructions')} className='form-input' onChange={(e: any) => setNewInstructions(e.target.value)}></input>
             </div>
             <div className='div-form-input'>
-              <p className='form-name'>Facilities:</p><input type='text' placeholder='Facilities...' className='form-input' onChange={(e: any) => setNewFacilities(e.target.value)} ></input>
+              <p className='form-name'>{t('facilities')}:</p><input type='text' placeholder={t('facilities')} className='form-input' onChange={(e: any) => setNewFacilities(e.target.value)} ></input>
             </div>
             <div className='div-form-input'>
-              <p className='form-name'>Contact:</p><input type='text' placeholder='Contact...' className='form-input' onChange={(e: any) => setNewContact(e.target.value)}></input>
+              <p className='form-name'>{t('contact')}:</p><input type='text' placeholder={t('contact')} className='form-input' onChange={(e: any) => setNewContact(e.target.value)}></input>
             </div>
             <button
               className='form-button-submit'
               onClick={registroSitio}
             >
-              Agregar
+              {t('add_site')}
             </button>
           </div>
           )}
