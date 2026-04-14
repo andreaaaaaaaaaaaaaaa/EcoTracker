@@ -8,16 +8,16 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background: #f5f0e8;
+  background: #f0f0e8;
   color: #1a2e4a;
   margin: 0;
   padding: 20px;
 }
 
 .memorama-container {
-  top: 5%;
   position: relative;
   margin: 0 auto;
+  min-height: 100%;
 }
 
 h1 {

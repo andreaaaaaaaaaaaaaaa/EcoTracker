@@ -22,19 +22,40 @@ function IA() {
     dangerouslyAllowBrowser: true
   });
 
+  // Función mejorada para extraer el tipo del residuo (busca en varios campos)
   const extraerTipo = (obj: any): string => {
-    const posiblesCampos = ['tipo', 'type', 'category', 'categoria', 'material', 'residuo'];
-    for (const campo of posiblesCampos) {
-      if (obj[campo] && typeof obj[campo] === 'string') {
-        return obj[campo];
+    const keywords = ['paper', 'cardboard', 'plast', 'vidrio', 'glass', 'metal', 'organico', 'battery', 'pilas', 'electronico'];
+    const buscar = (data: any): string | null => {
+      if (typeof data === 'string') {
+        const lower = data.toLowerCase();
+        if (keywords.some(kw => lower.includes(kw)) && lower.length > 2) {
+          return data;
+        }
+        return null;
       }
-    }
-    for (const key in obj) {
-      if (typeof obj[key] === 'string' && obj[key].length > 0) {
-        return obj[key];
+      if (Array.isArray(data)) {
+        for (const item of data) {
+          const res = buscar(item);
+          if (res) return res;
+        }
+        return null;
       }
-    }
-    return "No especificado";
+      if (typeof data === 'object' && data !== null) {
+        const camposPrioritarios = ['tipo', 'type', 'category', 'categoria', 'material', 'residuo', 'waste'];
+        for (const campo of camposPrioritarios) {
+          if (data[campo] && typeof data[campo] === 'string') {
+            return data[campo];
+          }
+        }
+        for (const key in data) {
+          const res = buscar(data[key]);
+          if (res) return res;
+        }
+      }
+      return null;
+    };
+    const encontrado = buscar(obj);
+    return encontrado || "No especificado";
   };
 
   const analizarImagen = async (base64Image: string) => {
@@ -66,8 +87,9 @@ function IA() {
       }
 
       console.log("JSON recibido:", objetoJson);
-
       const tipoValor = extraerTipo(objetoJson);
+      console.log("Tipo detectado:", tipoValor);
+
       const ideasArray = Array.isArray(objetoJson.ideas) ? objetoJson.ideas :
         (objetoJson.suggestions || []);
 
@@ -111,32 +133,23 @@ function IA() {
         <div className='contenedor'>
           <h1 className='tituloIA'>{t('find_out')}</h1>
           <button onClick={seleccionarImagen} disabled={loading} className='btnIA'>
-            {t('upload')}   {/* ← ya no muestra "Analizando..." */}
+            {t('upload')}
           </button>
           {imagen && <img src={imagen} className='fotoIA' alt="Uploaded" />}
-
-          {errorTexto && (
-            <div style={{ color: 'red', marginTop: '20px' }}>
-              Error: {errorTexto}
-            </div>
-          )}
-
           {respuesta && (
             <div className='respuestaIA'>
-              <p className='tipoIA' style={{ fontWeight: 'bold' }}>
-                {t('type')}: {respuesta.tipo}
-              </p>
+              <p className='tipoIA'>{t('type')}: {respuesta.tipo}</p>
               <div className='ideasIA'>
                 <p>{t('ideas')}</p>
                 <ul>
                   {respuesta.ideas?.map((idea, idx) => (
-                    <li key={idx} style={{ marginBottom: '10px' }}>{idea}</li>
+                    <li key={idx}>{idea}</li>
                   ))}
                 </ul>
               </div>
             </div>
           )}
-
+          {errorTexto && <p style={{ color: 'red' }}>{errorTexto}</p>}
         </div>
       </IonContent>
     </IonPage>
