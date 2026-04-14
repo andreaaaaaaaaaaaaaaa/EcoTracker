@@ -4,21 +4,29 @@ import OpenAI from "openai";
 import './IA.css';
 import { useTranslation } from 'react-i18next';
 
+// Interfaz para la respuesta esperada de la IA
+interface RespuestaIA {
+  tipo: string;
+  ideas: string[];
+}
+
 function IA() {
+  const { t } = useTranslation(); // Movido al inicio para usar en analizarImagen
+
   const [loading, setLoading] = useState(false);
-  const [respuesta, setRespuesta] = useState("")
-  const [imagen, setImagen] = useState(null)
+  const [respuesta, setRespuesta] = useState<RespuestaIA | null>(null);
+  const [imagen, setImagen] = useState<string | null>(null);
 
   const client = new OpenAI({
-    apiKey: import.meta.env.VITE_OPENAI_API_KEY, // Best practice: use process.env.REACT_APP_OPENAI_API_KEY
+    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true
   });
 
-  const analizarImagen = async (base64Image) => {
+  const analizarImagen = async (base64Image: string) => {
     setLoading(true);
     try {
       const response = await client.chat.completions.create({
-        model: "gpt-4o", // Ensure you use a vision-capable model
+        model: "gpt-4o",
         messages: [
           {
             role: "user",
@@ -27,7 +35,7 @@ function IA() {
               {
                 type: "image_url",
                 image_url: {
-                  url: base64Image, // Must include data:image/jpeg;base64, prefix
+                  url: base64Image,
                 },
               },
             ],
@@ -37,15 +45,13 @@ function IA() {
 
       console.log("Respuesta de IA:", response.choices[0].message.content);
       let rawContent = response.choices[0].message.content;
+      if (!rawContent) {
+        throw new Error("La IA no devolvió contenido");
+      }
       const cleanJsonString = rawContent.replace(/```json|```/g, "").trim();
-      const objetoJson = JSON.parse(cleanJsonString);
-      setRespuesta(objetoJson);
-      { console.log(respuesta.ideas) }
+      const objetoJson = JSON.parse(cleanJsonString) as RespuestaIA;
       console.log("JSON Limpio:", objetoJson);
-      // Convert the string into a real Javascript Object
-
       setRespuesta(objetoJson);
-
     } catch (error) {
       console.error("Error con OpenAI:", error);
     } finally {
@@ -58,15 +64,17 @@ function IA() {
     input.type = 'file';
     input.accept = 'image/*';
 
-    input.onchange = (e) => {
-      const file = e.target.files[0];
+    input.onchange = (e: Event) => {
+      const target = e.target as HTMLInputElement;
+      const file = target.files?.[0];
       if (!file) return;
 
       const reader = new FileReader();
       reader.onloadend = () => {
-        // reader.result contains the base64 string
-        setImagen(reader.result as any)
-        analizarImagen(reader.result);
+        if (typeof reader.result === 'string') {
+          setImagen(reader.result);
+          analizarImagen(reader.result);
+        }
       };
       reader.readAsDataURL(file);
     };
@@ -74,33 +82,33 @@ function IA() {
     input.click();
   };
 
-  const { t } = useTranslation();
-
   return (
     <IonPage>
       <IonContent className='fondo'>
-      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"></link>
-        <div className='fondo'> 
-        <div className='contenedor'>
-        <h1 className='tituloIA'>{t('find_out')} </h1>
-        <button onClick={seleccionarImagen} disabled={loading} className='btnIA'>
-          {loading ? 'Analizando...' : t('upload')}
-        </button>
-        <img src={imagen} className='fotoIA' />
-        <div className='respuestaIA'>
-          <p className='tipoIA'>{t('type')}: {respuesta.tipo}</p>
-          <div className='ideasIA'>
-          <p>{t('ideas')} </p>
-          <ul>
-            {respuesta.ideas && respuesta.ideas.map((idea, index) => (
-              <li key={index} style={{ marginBottom: '10px' }}>
-                {idea}
-              </li>
-            ))}
-          </ul>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+        <div className='fondo'>
+          <div className='contenedor'>
+            <h1 className='tituloIA'>{t('find_out')}</h1>
+            <button onClick={seleccionarImagen} disabled={loading} className='btnIA'>
+              {loading ? 'Analizando...' : t('upload')}
+            </button>
+            {imagen && <img src={imagen} className='fotoIA' alt="Uploaded" />}
+            {respuesta && (
+              <div className='respuestaIA'>
+                <p className='tipoIA'>{t('type')}: {respuesta.tipo}</p>
+                <div className='ideasIA'>
+                  <p>{t('ideas')}</p>
+                  <ul>
+                    {respuesta.ideas.map((idea, index) => (
+                      <li key={index} style={{ marginBottom: '10px' }}>
+                        {idea}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-        </div>
         </div>
       </IonContent>
     </IonPage>
