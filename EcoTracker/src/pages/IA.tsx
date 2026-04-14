@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 interface RespuestaIA {
   tipo?: string;
   ideas?: string[];
-  [key: string]: any; // para otras propiedades
+  [key: string]: any;
 }
 
 function IA() {
@@ -21,6 +21,21 @@ function IA() {
     apiKey: import.meta.env.VITE_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true
   });
+
+  const extraerTipo = (obj: any): string => {
+    const posiblesCampos = ['tipo', 'type', 'category', 'categoria', 'material', 'residuo'];
+    for (const campo of posiblesCampos) {
+      if (obj[campo] && typeof obj[campo] === 'string') {
+        return obj[campo];
+      }
+    }
+    for (const key in obj) {
+      if (typeof obj[key] === 'string' && obj[key].length > 0) {
+        return obj[key];
+      }
+    }
+    return "No especificado";
+  };
 
   const analizarImagen = async (base64Image: string) => {
     setLoading(true);
@@ -52,12 +67,7 @@ function IA() {
 
       console.log("JSON recibido:", objetoJson);
 
-      // Normalizar: buscar campo de tipo (tipo, category, material, etc.)
-      let tipoValor = objetoJson.tipo;
-      if (!tipoValor && objetoJson.category) tipoValor = objetoJson.category;
-      if (!tipoValor && objetoJson.material) tipoValor = objetoJson.material;
-      if (!tipoValor) tipoValor = "No especificado";
-
+      const tipoValor = extraerTipo(objetoJson);
       const ideasArray = Array.isArray(objetoJson.ideas) ? objetoJson.ideas :
         (objetoJson.suggestions || []);
 
@@ -101,7 +111,7 @@ function IA() {
         <div className='contenedor'>
           <h1 className='tituloIA'>{t('find_out')}</h1>
           <button onClick={seleccionarImagen} disabled={loading} className='btnIA'>
-            {loading ? 'Analizando...' : t('upload')}
+            {t('upload')}   {/* ← ya no muestra "Analizando..." */}
           </button>
           {imagen && <img src={imagen} className='fotoIA' alt="Uploaded" />}
 
@@ -127,12 +137,6 @@ function IA() {
             </div>
           )}
 
-          {/* Depuración: muestra el JSON crudo si no hay respuesta */}
-          {!respuesta && !loading && !errorTexto && (
-            <div style={{ fontSize: '12px', marginTop: '20px', color: '#666' }}>
-              Esperando imagen...
-            </div>
-          )}
         </div>
       </IonContent>
     </IonPage>

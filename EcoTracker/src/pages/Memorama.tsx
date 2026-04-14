@@ -69,58 +69,58 @@ const Memorama: React.FC = () => {
   };
 
   return (
-    <IonContent style={{ '--background': '#f0f0e8' } as any} className="memorama-container">
-  <div className="memorama-container">
-    <h1>{t('memory')}</h1>
+    <IonContent fullscreen className="memorama-container" style={{ '--padding-top': '0px' } as any}>
+      <div className="memorama-container">
+        <h1>{t('memory')}</h1>
 
-    <div style={{ padding: '0 20px 12px 20px', textAlign: 'center' }}>
-      <p style={{ margin: 0, color: '#36353a', fontSize: 14 }}>
-        {t('memory_text')}
-      </p>
-    </div>
+        <div style={{ padding: '0 20px 12px 20px', textAlign: 'center' }}>
+          <p style={{ margin: 0, color: '#36353a', fontSize: 14 }}>
+            {t('memory_text')}
+          </p>
+        </div>
 
-    <div className="memorama-controls">
-      <span id="tries">{t('tries')}: <strong>{tries}</strong></span>
-      <button onClick={initializeGame} className="memorama-btn-reset">{t('reset')}</button>
-    </div>
+        <div className="memorama-controls">
+          <span id="tries">{t('tries')}: <strong>{tries}</strong></span>
+          <button onClick={initializeGame} className="memorama-btn-reset">{t('reset')}</button>
+        </div>
 
-    <div className="memorama-game" id="memorama-game">
-      {cards.map((card, index) => (
-        <button
-          key={index}
-          className={`memorama-card ${card.type} ${flipped.includes(index) || matched.includes(index) ? 'memorama-card--flipped' : ''}`}
-          style={
-            (flipped.includes(index) || matched.includes(index)) && card.type === 'category'
-              ? { backgroundColor: card.color }
-              : {}
-          }
-          onClick={() => handleCardClick(index)}
-        >
-          {flipped.includes(index) || matched.includes(index) ? (
-            <div className="memorama-card__content">
-              <div className="memorama-card__emoji">{card.emoji}</div>
-              <div className="memorama-card__label">{card.label}</div>
-            </div>
-          ) : (
-            <div className="memorama-card__content">
-              <div className="memorama-card__question">?</div>
-            </div>
-          )}
-        </button>
-      ))}
-    </div>
-  </div>
-
-  {gameWon && (
-    <div className="memorama-overlay" id="memorama-win">
-      <div className="memorama-popup">
-        <h2>{t('well_done')}</h2>
-        <p>{t('you_completed')} <strong>{tries}</strong> {t('tries_juego')}.</p>
-        <button onClick={initializeGame} className="memorama-btn-reset">{t('play_again')}</button>
+        <div className="memorama-game" id="memorama-game">
+          {cards.map((card, index) => (
+            <button
+              key={index}
+              className={`memorama-card ${card.type} ${flipped.includes(index) || matched.includes(index) ? 'memorama-card--flipped' : ''}`}
+              style={
+                (flipped.includes(index) || matched.includes(index)) && card.type === 'category'
+                  ? { backgroundColor: card.color }
+                  : {}
+              }
+              onClick={() => handleCardClick(index)}
+            >
+              {flipped.includes(index) || matched.includes(index) ? (
+                <div className="memorama-card__content">
+                  <div className="memorama-card__emoji">{card.emoji}</div>
+                  <div className="memorama-card__label">{card.label}</div>
+                </div>
+              ) : (
+                <div className="memorama-card__content">
+                  <div className="memorama-card__question">?</div>
+                </div>
+              )}
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
-  )}
-</IonContent>
+
+      {gameWon && (
+        <div className="memorama-overlay" id="memorama-win">
+          <div className="memorama-popup">
+            <h2>{t('well_done')}</h2>
+            <p>{t('you_completed')} <strong>{tries}</strong> {t('tries_juego')}.</p>
+            <button onClick={initializeGame} className="memorama-btn-reset">{t('play_again')}</button>
+          </div>
+        </div>
+      )}
+    </IonContent>
   );
 };
 

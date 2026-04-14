@@ -19,7 +19,6 @@
   --radius-sm: 10px;
 }
 
-/* ===== Fondo ===== */
 .fondo {
   min-height: 100vh;
   background: #F0F0E9;
@@ -29,11 +28,29 @@
   padding: 3rem 1.5rem;
 }
 
+.fondo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 .logo{
     width: 10%;
 }
 
-/* ===== Contenedor principal ===== */
 .contenedor {
   width: 100%;
   max-width: 600px;
