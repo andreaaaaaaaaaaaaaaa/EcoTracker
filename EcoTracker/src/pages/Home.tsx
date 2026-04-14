@@ -54,7 +54,7 @@ function UpdateVisibleMarkers({ markers, setVisibleMarkers }: { markers: any[], 
       const visibles = markers
         .filter(marker => marker && typeof marker.lat === 'number' && typeof marker.lon === 'number')
         .filter(marker => bounds.contains([marker.lat, marker.lon]));
-      setVisibleMarkers((prev: any[]) => arraysAreEqual(prev, visibles) ? prev : visibles);
+      setVisibleMarkers(visibles);
     }
 
     update();
@@ -161,11 +161,11 @@ const Home: React.FC = () => {
     return null;
   }
 
-  useIonViewWillEnter(async () => {
+  useIonViewWillEnter(() => {
     const savedLanguage = cookies.get('i18next') || 'es';
     setCurrentLanguageCode(savedLanguage);
     if (i18n.language !== savedLanguage) {
-      await i18n.changeLanguage(savedLanguage);
+      i18n.changeLanguage(savedLanguage);
     }
 
     if (navigator.geolocation) {

@@ -6,15 +6,15 @@ import { useTranslation } from 'react-i18next';
 
 function IA() {
   const [loading, setLoading] = useState(false);
-  const [respuesta, setRespuesta] = useState("")
-  const [imagen, setImagen] = useState(null)
+  const [respuesta, setRespuesta] = useState<any>("")
+  const [imagen, setImagen] = useState<string | null>(null)
 
   const client = new OpenAI({
     apiKey: import.meta.env.VITE_OPENAI_API_KEY, // Best practice: use process.env.REACT_APP_OPENAI_API_KEY
     dangerouslyAllowBrowser: true
   });
 
-  const analizarImagen = async (base64Image) => {
+  const analizarImagen = async (base64Image: string) => {
     setLoading(true);
     try {
       const response = await client.chat.completions.create({
@@ -37,10 +37,10 @@ function IA() {
 
       console.log("Respuesta de IA:", response.choices[0].message.content);
       let rawContent = response.choices[0].message.content;
-      const cleanJsonString = rawContent.replace(/```json|```/g, "").trim();
+      const cleanJsonString = rawContent!.replace(/```json|```/g, "").trim();
       const objetoJson = JSON.parse(cleanJsonString);
       setRespuesta(objetoJson);
-      { console.log(respuesta.ideas) }
+      { console.log(respuesta?.ideas) }
       console.log("JSON Limpio:", objetoJson);
       // Convert the string into a real Javascript Object
 
@@ -58,15 +58,16 @@ function IA() {
     input.type = 'file';
     input.accept = 'image/*';
 
-    input.onchange = (e) => {
-      const file = e.target.files[0];
+    input.onchange = (e: Event) => {
+      const target = e.target as HTMLInputElement;
+      const file = target.files?.[0];
       if (!file) return;
 
       const reader = new FileReader();
       reader.onloadend = () => {
         // reader.result contains the base64 string
         setImagen(reader.result as any)
-        analizarImagen(reader.result);
+        analizarImagen(reader.result as string);
       };
       reader.readAsDataURL(file);
     };
@@ -86,13 +87,13 @@ function IA() {
         <button onClick={seleccionarImagen} disabled={loading} className='btnIA'>
           {loading ? 'Analizando...' : t('upload')}
         </button>
-        <img src={imagen} className='fotoIA' />
+        <img src={imagen ?? undefined} className='fotoIA' />
         <div className='respuestaIA'>
-          <p className='tipoIA'>{t('type')}: {respuesta.tipo}</p>
+          <p className='tipoIA'>{t('type')}: {respuesta?.tipo}</p>
           <div className='ideasIA'>
           <p>{t('ideas')} </p>
           <ul>
-            {respuesta.ideas && respuesta.ideas.map((idea, index) => (
+            {respuesta?.ideas && respuesta.ideas.map((idea: any, index: number) => (
               <li key={index} style={{ marginBottom: '10px' }}>
                 {idea}
               </li>
