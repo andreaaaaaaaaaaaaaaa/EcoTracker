@@ -33,20 +33,18 @@
 .text1 {
     color: #5A7964;
     text-align: center;
-    font-size: 2.2em;
+    font-size: 4vh;
     font-weight: bold;
-    margin-top: 1vh;
 }
 
-.name,
-.mail,
-.pswd2,
-.permission,
-.txsign,
-.text2,
-.textLog {
+.name-su,
+.mail-su,
+.pswd2-su,
+.permission-su,
+.txsign-su,
+.text2-su,
+.textLog-su {
     position: absolute;
-    left: 10vw;
     color: #5A7964;
     font-weight: bold;
     font-size: 1.1em;
@@ -54,41 +52,49 @@
 }
 
 
-.name {
-    top: 28vh;
+.name-su {
+    left: 10vw;
+    top: 26vh;
 }
 
-.mail {
-    top: 40vh;
+.mail-su {
+    left: 10vw;
+    top: 41vh;
 }
 
-.pswd2 {
-    top: 52vh;
+.pswd2-su {
+    left: 10vw;
+    top: 56vh;
 }
 
-.permission {
-    top: 66vh;
-    font-size: em;
-}
-
-.txsign {
+.txsign-su {
     top: 82vh;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 0.95em;
 }
 
-.text2 {
-    top: 90vh;
-    left: 12vw;
-    font-size: 1.3¿2em;
+.alt-su{
+    padding-bottom: 3vh;
+    padding-left: 3vh;
+    padding-right: 3vh;
+    position: relative;
+    top: 87vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 100vw;
+    flex-direction: row;
+    gap: 5vw;
+    font-size: 2vh;
 }
 
-.textLog {
-    top: 91.5vh;
-    left: 70vw;
+.text2-su {
+    position: relative;
+}
+
+.textLog-su {
+    position: relative;
     color: #003F5C;
-    font-size: 1.2em;
 }
 
 #InputNom,
@@ -105,22 +111,29 @@
     transform: translateX(-50%);
 }
 
+#InputNom .input-wrapper,
+#InputMail .input-wrapper,
+#InputPswd2 .input-wrapper {
+    background-color: #DADAC7 !important;
+    color: #000 !important;
+}
+
 #InputNom {
     top: 33vh;
 }
 
 #InputMail {
-    top: 45vh;
+    top: 48vh;
 }
 
 #InputPswd2 {
-    top: 57vh;
+    top: 63vh;
 }
 
 
 .SignUp {
     position: absolute;
-    top: 72vh;
+    top: 75vh;
     left: 50%;
     transform: translateX(-50%);
     width: 60vw;

@@ -1,0 +1,169 @@
+:root {
+    --conectar-accent: #7a9e8e
+}
+* {
+    box-sizing: border-box
+}
+body {
+    font-family: Segoe UI, Roboto, Arial;
+    margin: 0;
+    padding: 18px;
+    background: #f5f0e8;
+    color: #1a2e4a
+}
+.conectar-wrap {
+    top: 5%;
+    position: relative;
+    max-width: 980px;
+    margin: 0 auto
+}
+h1 {
+    text-align: center;
+    margin-bottom: 12px;
+    color: #1a2e4a
+}
+.conectar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+button {
+    background: #1a2e4a;
+    color: #e8f2ee;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease
+}
+button:hover {
+    background: #2c4a6e
+}
+.conectar-game {
+    display: flex;
+    gap: 18px;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+}
+.conectar-left,
+.conectar-right {
+    flex: 1;
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 10px;
+    min-height: 420px;
+    border: 1px solid rgba(122, 158, 142, 0.25)
+}
+.conectar-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-content: flex-start;
+}
+.conectar-item {
+    width: 100%;
+    border-radius: 8px;
+    border: 2px dashed rgba(122, 158, 142, 0.35);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    background: linear-gradient(180deg, #ffffff, #f0f7f4);
+    cursor: grab
+}
+.conectar-item.conectar-item--dragging {
+    opacity: 0.45
+}
+.conectar-item.conectar-item--selected {
+    outline: 3px solid rgba(122, 158, 142, 0.3);
+    box-shadow: 0 6px 18px rgba(122, 158, 142, 0.15)
+}
+.conectar-item.conectar-item--wrong {
+    animation: conectar-shake 0.5s
+}
+.conectar-target.conectar-target--wrong {
+    animation: conectar-shake 0.5s
+}
+.conectar-target.conectar-target--selected {
+    border-color: var(--conectar-accent)
+}
+.conectar-icon {
+    font-size: 30px
+}
+.conectar-name {
+    font-weight: 700;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #1a2e4a
+}
+.conectar-target {
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #f5f0e8;
+    border: 2px solid transparent;
+    min-height: 60px
+}
+.conectar-target.conectar-target--hover {
+    border-color: var(--conectar-accent)
+}
+.conectar-target.conectar-target--locked {
+    background: #e8f2ee;
+    border-color: #7a9e8e
+}
+.conectar-desc {
+    font-size: 13px;
+    color: #1a2e4a
+}
+.conectar-pair {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+.conectar-small {
+    font-size: 12px;
+    color: #5a7a6c
+}
+.conectar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 46, 74, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+.conectar-modal {
+    background: #f5f0e8;
+    padding: 24px;
+    border-radius: 12px;
+    text-align: center;
+    border: 2px solid #a8c5b8;
+    box-shadow: 0 8px 32px rgba(26, 46, 74, 0.2)
+}
+.conectar-modal h2 {
+    color: #1a2e4a;
+    margin: 0 0 10px 0
+}
+.conectar-modal p {
+    color: #5a7a6c;
+    margin-bottom: 20px
+}
+@media (max-width:820px) {
+    .conectar-game {
+        flex-direction: column
+    }
+    .conectar-left,
+    .conectar-right {
+        min-height: 260px
+    }
+}
+@keyframes conectar-shake {
+    0% { transform: translateX(0) }
+    20% { transform: translateX(-6px) }
+    40% { transform: translateX(6px) }
+    60% { transform: translateX(-4px) }
+    80% { transform: translateX(4px) }
+    100% { transform: translateX(0) }
+}

@@ -4,7 +4,154 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 2em;
   font-weight: bold;
-  margin: 5vh 0;
+  margin-top: 5vh;
+}
+
+/* ── Profile header ─────────────────────────────────────── */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  padding: 0 5vw;
+  gap: 12px;
+  margin-top: 2vh;
+}
+
+/* Fila: avatar + nombre + botón salir */
+.profile-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.profile-user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-image {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.profile-name {
+  color: #0A3A4F;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-rank {
+  color: #002501;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82em;
+  font-weight: bold;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logout-button {
+  color: white;
+  --background: #003f5c;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  flex-shrink: 0;
+  font-size: 0.8em;
+}
+
+/* ── Language selector ──────────────────────────────────── */
+.language-selector-container {
+  padding: 10px 0 4px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.language-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #555;
+  margin: 0 0 6px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.language-buttons-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.language-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  background-color: #374151;
+  color: #d1d5db;
+  border: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.language-button:hover {
+  background-color: #4b5563;
+}
+
+.language-button.active {
+  background-color: #0891b2;
+  color: white;
+}
+
+.language-button.active:hover {
+  background-color: #0e7490;
+}
+
+.language-flag {
+  font-size: 1rem;
+}
+
+.language-name {
+  font-weight: 500;
+}
+
+.language-indicator {
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+/* ── Favourite places ───────────────────────────────────── */
+.fav-places {
+  color: #0A3A4F;
+  margin-left: 5vw;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3vh;
+  font-weight: bold;
+  margin-top: 2vh;
 }
 
 .slide-box {
@@ -21,53 +168,6 @@
   margin: 10px;
   position: relative;
   cursor: pointer;
-}
-
-.profile-header {
-  display: flex;
-  align-items: center;
-  padding: 5vw;
-  margin-top: 5vh;
-}
-
-.profile-image {
-  width: 35vw;
-  max-width: 150px;
-  height: auto;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 2vh;
-}
-
-.profile-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.profile-name {
-  color: #0A3A4F;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.4em;
-  font-weight: bold;
-}
-
-.profile-rank {
-  color: #002501;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.1em;
-  font-weight: bold;
-  margin-top: 1vh;
-}
-
-.fav-places {
-  margin-top: 6vh;
-  color: #0A3A4F;
-  margin-left: 5vw;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.3em;
-  font-weight: bold;
 }
 
 .img-fav-places {
@@ -91,6 +191,7 @@
   font-size: 1em;
 }
 
+/* ── Modal ──────────────────────────────────────────────── */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -99,6 +200,7 @@
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 999;
@@ -112,23 +214,57 @@
   max-width: 400px;
   text-align: center;
   font-family: 'Montserrat', sans-serif;
+  max-height: 85vh;
+  overflow-y: auto;
 }
 
+.modal-content-text {
+  color: black;
+}
+
+/* ── Desktop overrides ──────────────────────────────────── */
 @media (min-width: 768px) {
   .profile-header {
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 0 5vw;
+  }
+
+  .profile-top-row {
+    flex: 1;
+    min-width: 260px;
+  }
+
+  .language-selector-container {
+    border-top: none;
+    padding: 0;
+    min-width: 220px;
+  }
+
+  .language-buttons-container {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .language-button {
+    justify-content: flex-start;
+    font-size: 0.9rem;
+    padding: 8px 12px;
   }
 
   .profile-image {
-    margin-bottom: 0;
-    margin-right: 2vw;
+    width: 64px;
+    height: 64px;
   }
 
-  .profile-info {
-    align-items: flex-start;
-    text-align: left;
+  .profile-name {
+    font-size: 1.2em;
+  }
+
+  .profile-rank {
+    font-size: 0.95em;
   }
 
   .slide-box {

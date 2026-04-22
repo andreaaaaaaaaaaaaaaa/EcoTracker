@@ -4,48 +4,48 @@ import { IonReactRouter } from '@ionic/react-router';
 import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { registrarUsuario } from "../services/firebaseFunctions.js";
+import { setDoc, doc } from "firebase/firestore";  //importamos la conexión
+import { auth, db } from "../firebaseConfig";
+import { createUserWithEmailAndPassword as registroUsuario } from "firebase/auth";
 import { Route, Redirect } from 'react-router';
 import ExploreContainer from '../components/ExploreContainer';
 import './SignUp.css';
 
 
 function SignUp() {
-  const [registro, setRegistro] = useState({
-    nombre: "",
-    usuario: "",
-    contrasena: "",
-    savedSites: [],
-  });
 
   const [error, setError] = useState(false);
+  const [usuario, setUsuario] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [contrasena, setContrasena] = useState("");
   const history = useHistory();
 
   const irALogIn = () => {
     history.push('/login');
   };
 
-  const registroUsuario = () => {
-    const nombre = (document.getElementById('InputNom') as HTMLInputElement)?.value;
-    const usuario = (document.getElementById('InputMail') as HTMLInputElement)?.value;
-    const contrasena = (document.getElementById('InputPswd2') as HTMLInputElement)?.value;
+  const guardarUsuario = async () => {
 
-    const nuevoRegistro = {
-      ...registro,
-      nombre,
-      usuario,
-      contrasena,
-    };
+   try {
+    const userCredential = await registroUsuario(auth, usuario, contrasena);
+    const user = userCredential.user;
 
-    console.log(nuevoRegistro);
+     await setDoc (doc(db, "usuarios", user.uid), {
+       usuario: usuario,
+       nombre: nombre
+     });
 
-    if (nombre !== "" && usuario !== "" && contrasena !== "") {
-      setError(false);
-      registrarUsuario(nuevoRegistro);
-      irALogIn();
-    } else {
-      setError(true);
-    }
-  };
+     //limpiamos los inputs
+     setUsuario("");
+     setContrasena("");
+     setNombre("");
+
+     irALogIn();
+
+   } catch (e) {
+     console.error("Error añadiendo el documento:", e);
+   }
+ };
 
   return (
     <IonPage>
@@ -57,52 +57,49 @@ function SignUp() {
           <img src="../../assets/logoDraw.png" />
         </div>
         <div className='rectangulo'>
-          <p className='text1'>Get started</p>
+          <p className='text1'>Comencemos</p>
         </div>
-        <p className='name'>Name:</p>
+        <p className='name-su'>Nombre:</p>
         <div className='Nombre' /*SECCION DONDE SE INGRESA EL NOMBRE*/>
           <IonInput  /*DONDE SE INGRESA EL NOMBRE*/
             clearInput={true}
             fill='solid'
             id='InputNom'
             color={'warning'}
-            onIonChange={(e: any) => setRegistro({ ...registro, nombre: e.target.value })}
+            onIonChange={(e: any) => setNombre(e.target.value )}
           ></IonInput>
         </div>
-        <p className='mail'>Username:</p>
+        <p className='mail-su'>Correo:</p>
         <div className='Mail' /*SECCION DONDE SE INGRESA EL NOMBRE*/>
           <IonInput  /*DONDE SE INGRESA EL NOMBRE*/
             clearInput={true}
             fill='solid'
             id='InputMail'
             color={'warning'}
-            onIonChange={(e: any) => setRegistro({ ...registro, usuario: e.target.value })}
+            onIonChange={(e: any) => setUsuario(e.target.value )}
           ></IonInput>
         </div>
-        <p className='pswd2'>Password:</p>
+        <p className='pswd2-su'>Contraseña:</p>
         <div className='Password2' /*SECCION DONDE SE INGRESA EL NOMBRE*/>
           <IonInput  /*DONDE SE INGRESA EL NOMBRE*/
             clearInput={true}
             fill='solid'
             id='InputPswd2'
             color={'warning'}
-            onIonChange={(e: any) => setRegistro({ ...registro, contrasena: e.target.value })}
+            onIonChange={(e: any) => setContrasena(e.target.value )}
           ></IonInput>
         </div>
         <div>
-          <IonToggle checked={true} className='permission'>Share my location</IonToggle>
-        </div>
-        <div>
-          <IonButton className='SignUp' onClick={registroUsuario}>Sign Up</IonButton>
+          <IonButton className='SignUp' onClick={guardarUsuario}>Regístrate</IonButton>
           {error === true &&
             <h1> Todos los datos son obligatorios</h1>
           }
         </div>
 
 
-        <div>
-          <p className='text2'>Already have an account?</p>
-          <a className='textLog' href="/logIn">Log in</a>
+        <div className='alt-su'>
+          <p className='text2-su'>¿Ya tienes una cuenta?</p>
+          <a className='textLog-su' href="/logIn">Inicia sesión</a>
         </div>
       </IonContent>
     </IonPage>

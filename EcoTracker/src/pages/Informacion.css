@@ -61,20 +61,27 @@
 }
 
 .logoTemas {
-    height: 5vh;
-    width: 10vh;
+    width: 8vh;
+    right: 2vh;
     position: absolute;
-    top: 3vh;
-    left: 85%;
-    transform: translateX(-50%);
 }
 
 .temas {
+    left: 3vh;
     color: #0A3A4F;
-    position: relative;
-    left: 6%;
+    position: absolute;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.4em;
+    font-size: 2vh;
     font-weight: bold;
-    margin: 5vh 0;
+}
+
+.learn{
+    gap: 1rem;
+    position: relative;
+    margin-bottom: 9vh;
+    top: 5vh;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

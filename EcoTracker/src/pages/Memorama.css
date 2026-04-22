@@ -1,0 +1,220 @@
+:root {
+  --card-size: 110px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #f0f0e8;
+  color: #1a2e4a;
+  margin: 0;
+  padding: 20px;
+}
+
+.memorama-container {
+  position: relative;
+  margin: 0 auto;
+  min-height: 100%;
+}
+
+h1 {
+  text-align: center;
+  color: #1a2e4a;
+  font-size: 1.8em;
+}
+
+.memorama-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: #1a2e4a;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.memorama-game {
+  display: grid;
+  margin: 3%;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.memorama-card {
+  background: #1a2e4a;
+  border: none;
+  border-radius: 10px;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.memorama-card:hover:not(.memorama-card--flipped) {
+  transform: scale(1.05);
+}
+
+.memorama-card--flipped {
+  background: #ffffff;
+  border: 2px solid #a8c5b8;
+}
+
+.memorama-card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.memorama-card__question {
+  font-size: 42px;
+  color: #a8c5b8;
+  font-weight: bold;
+}
+
+.memorama-card__emoji {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.memorama-card__label {
+  font-size: 10px;
+  color: #1a2e4a;
+  font-weight: 600;
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+.memorama-card--matched {
+  opacity: 0.5;
+}
+
+.memorama-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 46, 74, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.memorama-popup {
+  background: #f5f0e8;
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(26, 46, 74, 0.25);
+  border: 2px solid #a8c5b8;
+}
+
+.memorama-popup h2 {
+  color: #1a2e4a;
+  font-size: 28px;
+  margin: 0 0 10px 0;
+}
+
+.memorama-popup p {
+  color: #5a7a6c;
+  margin-bottom: 20px;
+}
+
+.memorama-btn-reset {
+  background: #1a2e4a;
+  color: #e8f2ee;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.memorama-btn-reset:hover {
+  background: #2c4a6e;
+}
+
+button {
+  font-family: 'Montserrat', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .memorama-game {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .memorama-card {
+    height: 90px;
+  }
+
+  .memorama-card__emoji {
+    font-size: 28px;
+  }
+
+  .memorama-card__label {
+    font-size: 9px;
+  }
+
+  .memorama-card__question {
+    font-size: 36px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 520px) {
+  .memorama-game {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .memorama-card {
+    height: 80px;
+  }
+
+  .memorama-card__emoji {
+    font-size: 24px;
+  }
+
+  .memorama-card__label {
+    font-size: 8px;
+  }
+
+  .memorama-card__question {
+    font-size: 32px;
+  }
+
+  h1 {
+    font-size: 1.3em;
+  }
+
+  .memorama-btn-reset {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .memorama-controls {
+    gap: 10px;
+  }
+}

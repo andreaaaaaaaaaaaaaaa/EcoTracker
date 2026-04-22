@@ -7,7 +7,8 @@ import Inicio from './pages/Inicio';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Tabs from './pages/Tabs';
-
+import Cuenta from './pages/Cuenta';
+import Informacion from './pages/Informacion';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -37,29 +38,33 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { Suspense } from 'react';
 
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/inicio">
-          <Inicio />
-        </Route>
-        <Route exact path="/logIn">
-          <LogIn />
-        </Route>
-        <Route exact path="/SignUp">
-          <SignUp />
-        </Route>
-        <Route path="/tabs" component={Tabs} />
-        <Route exact path="/">
-          <Redirect to="/tabs" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+  <Suspense fallback={<div>Cargando...</div>}>
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route exact path="/inicio">
+            <Inicio />
+          </Route>
+          <Route exact path="/logIn">
+            <LogIn />
+          </Route>
+          <Route exact path="/SignUp">
+            <SignUp />
+          </Route>
+          <Route path="/tabs" component={Tabs} />
+          <Route exact path="/">
+            <Redirect to="/logIn" />
+          </Route>
+
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  </Suspense>
 );
 
 export default App;

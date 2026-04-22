@@ -1,14 +1,15 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
 
-// Mock matchmedia
-window.matchMedia = window.matchMedia || function() {
+// Mock matchmedia con la interfaz completa de MediaQueryList
+window.matchMedia = window.matchMedia || function (query: string): MediaQueryList {
   return {
-      matches: false,
-      addListener: function() {},
-      removeListener: function() {}
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: function () { },      // deprecated pero necesario para compatibilidad
+    removeListener: function () { },   // deprecated
+    addEventListener: function () { },
+    removeEventListener: function () { },
+    dispatchEvent: function () { return true; },
   };
 };

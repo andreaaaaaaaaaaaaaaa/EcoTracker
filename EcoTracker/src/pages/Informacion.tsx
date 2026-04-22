@@ -2,66 +2,72 @@ import React from 'react';
 import { IonContent, useIonRouter, IonPage, IonCard, IonCardContent, IonIcon } from '@ionic/react';
 import { playCircle } from 'ionicons/icons';
 import './Informacion.css';
-
-const temas = [
-  {
-    titulo: 'IMPORTANCE OF RECYCLING',
-    descripcion: 'In this lesson you will learn about why and what to recycle',
-    imagen: 'assets/recycling1.png',
-  },
-  {
-    titulo: 'RECYCLING BINS',
-    descripcion: 'In this lesson you will learn about the function of each type of bin',
-    imagen: 'assets/recycling2.png',
-  },
-  {
-    titulo: 'RECYCLING SYMBOLS',
-    descripcion: 'In this lesson you will learn about the most common and important recycling symbols',
-    imagen: 'assets/recycling3.png',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 const Informacion: React.FC = () => {
   const router = useIonRouter();
+  const { t } = useTranslation();
+
+  const temas = [
+    {
+      titulo: t('importance_of_recycling'),
+      descripcion: t('in_this_lesson1'),
+      imagen: 'assets/recycling1.png',
+    },
+    {
+      titulo: t('recycling_bins'),
+      descripcion: t('in_this_lesson2'),
+      imagen: 'assets/recycling2.png',
+    },
+    {
+      titulo: t('plastic_symbols'),
+      descripcion: t('in_this_lesson3'),
+      imagen: 'assets/recycling3.png',
+    },
+  ];
 
   return (
     <IonPage>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"></link>
       <IonContent className="ion-padding" style={{ '--ion-background-color': '#F0F0E9' }}>
-        <div className='temas'> LEARN TO RECYCLE
+        <div className='learn'>
+          <p className='temas'> {t('learn_to_recycle')}
+          </p>
+          <img src="../../assets/logoDraw.png" className='logoTemas' />
         </div>
-        <div className='logoTemas'>
-          <img src="../../assets/logoDraw.png" />
-        </div>
-        {temas.map((tema, index) => (
-          <IonCard
-            key={index}
-            button
-            className="recycling-tema"
-            onClick={() => {
-              if (index === 0) {
-                router.push('/tabs/elemento/1', 'forward');
-              } else if (index === 1) {
-                router.push('/tabs/elemento/2', 'forward');
-              } else {
-                router.push(`/tabs/elemento/${index + 1}`, 'forward');
-              }
-            }}
-          >
-            <div
-              className="tema-background"
-              style={{ backgroundImage: `url(${tema.imagen})` }}
+        <div>
+          {temas.map((tema, index) => (
+            <IonCard
+              key={index}
+              button
+              className="recycling-tema"
+              onClick={() => {
+                if (index === 0) {
+                  router.push('/tabs/elemento/1', 'forward');
+                } else if (index === 1) {
+                  router.push('/tabs/elemento/2', 'forward');
+                } else if (index === 2) {
+                  router.push('/tabs/elemento/3', 'forward');
+                } else {
+                  router.push(`/tabs/elemento/${index + 1}`, 'forward');
+                }
+              }}
             >
-              <div className="overlay">
-                <IonCardContent className="text-content">
-                  <h2>{tema.titulo}</h2>
-                  <p>{tema.descripcion}</p>
-                  <IonIcon icon={playCircle} className="play-icon" />
-                </IonCardContent>
+              <div
+                className="tema-background"
+                style={{ backgroundImage: `url(${tema.imagen})` }}
+              >
+                <div className="overlay">
+                  <IonCardContent className="text-content">
+                    <h2>{tema.titulo}</h2>
+                    <p>{tema.descripcion}</p>
+                    <IonIcon icon={playCircle} className="play-icon" />
+                  </IonCardContent>
+                </div>
               </div>
-            </div>
-          </IonCard>
-        ))}
+            </IonCard>
+          ))}
+        </div>
       </IonContent>
     </IonPage>
   );

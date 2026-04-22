@@ -7,6 +7,8 @@ import { Route, Redirect } from 'react-router';
 import ExploreContainer from '../components/ExploreContainer';
 import './LogIn.css';
 import { verificarCredenciales } from "../services/firebaseFunctions.js"
+import { signInWithEmailAndPassword as loginUsuario } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 
 
 const LogIn: React.FC = () => {
@@ -16,29 +18,22 @@ const LogIn: React.FC = () => {
   const [contrasena, setContrasena] = useState("");
   const [error, setError] = useState(false);
 
-  const handleLogin = async () => {
-    try {
-      console.log("Usuario ingresado:", usuario);
-      console.log("Contraseña ingresada:", contrasena);
-
-      // Llama a la función verificar
-      const usuarioAutenticado = await verificarCredenciales(usuario, contrasena);
-      if (usuarioAutenticado) {
-        setError(false);
-
-        // guarda el usuario en localStorage
-        localStorage.setItem("usuarioId", usuarioAutenticado.id);
-
-        history.replace('/tabs/inicio'); // Redirige a la página de tabs
-      } else {
-        setError(true);
-        console.log("Credenciales incorrectas");
-      }
-    } catch (error) {
-      console.error("Error durante el login:", error);
-      setError(true);
-    }
+  const irAMapa = () => {
+    history.push('/tabs/mapa');
   };
+
+  const handleLogin = async () =>{
+        try{
+            await loginUsuario(auth, usuario, contrasena);
+            irAMapa();
+        }catch(error: any){
+            if(error.code === 'auth/user-notfound' || error.code === 'auth/wrong/-password'){
+                alert("correo o contraseña incorrectos");
+            }else{
+                alert("Error al iniciar sesión")
+            }
+        }
+    }
 
   return (
     <IonPage>
@@ -50,9 +45,9 @@ const LogIn: React.FC = () => {
           <img src="../../assets/logoDraw.png" />
         </div>
         <div className='rectangulo'>
-          <p className='welcome'>Welcome</p>
+          <p className='welcome'>Bienvenido</p>
         </div>
-        <p className='name'>Username:</p>
+        <p className='name'>Correo:</p>
         <div className='Nombre' /*SECCION DONDE SE INGRESA EL NOMBRE*/>
           <IonInput  /*DONDE SE INGRESA EL NOMBRE*/
             clearInput={true}
@@ -61,7 +56,7 @@ const LogIn: React.FC = () => {
             onIonInput={(e: any) => setUsuario(e.target.value)}
           ></IonInput>
         </div>
-        <p className='pswd'>Password:</p>
+        <p className='pswd'>Contraseña:</p>
         <div className='Password' /*SECCION DONDE SE INGRESA EL NOMBRE*/>
           <IonInput  /*DONDE SE INGRESA EL NOMBRE*/
             clearInput={true}
@@ -72,13 +67,11 @@ const LogIn: React.FC = () => {
           ></IonInput>
         </div>
         <div>
-          <IonButton className='logIn' onClick={handleLogin} >Log in</IonButton>
+          <IonButton className='logIn' onClick={handleLogin} >Iniciar sesión</IonButton>
         </div>
-
-
-        <div>
-          <p className='text'>Don't have an account?</p>
-          <a className='signUp' href="/signup">Sign up</a>
+        <div className='alt'>
+          <p className='text'>¿No tienes cuenta?</p>
+          <a className='signUp' href="/signup">Regístrate</a>
         </div>
       </IonContent>
     </IonPage>
