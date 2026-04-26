@@ -414,6 +414,10 @@ const Home: React.FC = () => {
               <input type='text' placeholder={t('name_site')} className='form-input' onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewName(e.target.value)} />
             </div>
             <div className='div-form-input'>
+              <p className='form-name'>{t('address')}:</p>
+              <input type='text' placeholder={t('address')} className='form-input' onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewAddress(e.target.value)} />
+            </div>
+            <div className='div-form-input'>
               <p className='form-name'>{t('latitude')}:</p>
               <input type='text' placeholder={t('latitude')} className='form-input' onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewLat(e.target.value)} />
             </div>

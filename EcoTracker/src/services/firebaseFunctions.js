@@ -8,7 +8,7 @@ const auth = getAuth();
 export const registrarSitio = async (sitio) => {
     console.log(sitio)
     try {
-        const docRef = await addDoc(collection(db, "sitios"), sitio);
+        const docRef = await addDoc(collection(db, "sites"), sitio);
         console.log("Sitio registrado con ID", docRef.id);
     } catch (error) {
         console.error("Error al registrar sitio: ", error);
