@@ -33,12 +33,10 @@ const languages = [
   {
     code: 'en',
     name: 'English',
-    flag: '🇺🇸',
   },
   {
     code: 'es',
     name: 'Español',
-    flag: '🇪🇸',
   }
 ];
 
@@ -172,7 +170,6 @@ function Cuenta() {
                   onClick={() => handleLanguageChange(language.code)}
                   className={`language-button ${currentLanguageCode === language.code ? 'active' : ''}`}
                 >
-                  <span className="language-flag">{language.flag}</span>
                   <span className="language-name">{language.name}</span>
                   {currentLanguageCode === language.code && (
                     <div className="language-indicator"></div>
